@@ -61,6 +61,18 @@ export async function signInWithGoogle(): Promise<User | null> {
   } catch (error: any) {
     console.error('Google sign-in error:', error);
 
+    const errorCode = error?.code ?? 'unknown_error';
+    const errorMessage = error?.message ?? String(error);
+
+    if (typeof window !== 'undefined') {
+      // Show a helpful message to the user (and developer) with the exact error code.
+      // This makes it easier to diagnose issues like missing authorized domains or OAuth misconfiguration.
+      // eslint-disable-next-line no-alert
+      alert(
+        `Google sign-in error: ${errorCode} — ${errorMessage}.\n\nIf this persists on production, please add your domain to Firebase Auth authorized domains and verify Google OAuth credentials.`
+      );
+    }
+
     if (
       error?.code === 'auth/popup-blocked' ||
       error?.code === 'auth/operation-not-supported-in-this-environment' ||
@@ -72,6 +84,10 @@ export async function signInWithGoogle(): Promise<User | null> {
         await signInWithRedirect(auth, provider);
       } catch (redirectError) {
         console.error('Google redirect fallback failed:', redirectError);
+        if (typeof window !== 'undefined') {
+          // eslint-disable-next-line no-alert
+          alert(`Google redirect fallback failed: ${redirectError?.message ?? String(redirectError)}`);
+        }
       }
     }
 
