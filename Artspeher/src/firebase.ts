@@ -82,7 +82,7 @@ export async function signInWithGoogle(): Promise<User | null> {
       try {
         await setPersistence(auth, browserLocalPersistence);
         await signInWithRedirect(auth, provider);
-      } catch (redirectError) {
+      } catch (redirectError: any) {
         console.error('Google redirect fallback failed:', redirectError);
         if (typeof window !== 'undefined') {
           // eslint-disable-next-line no-alert
