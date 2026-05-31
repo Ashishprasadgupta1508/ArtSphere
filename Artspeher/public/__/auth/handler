@@ -1,56 +1,59 @@
 <!doctype html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Firebase Auth Redirect Handler</title>
-  </head>
-  <body>
+</head>
+
+<body>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
     <script>
-      // Firebase config (must match your app)
-      var firebaseConfig = {
-        apiKey: 'AIzaSyDHWTMe101Rb0mU0OxXN1TPdsk6ZIDzccg',
-        authDomain: 'artsphere-43082.firebaseapp.com',
-        projectId: 'artsphere-43082',
-        storageBucket: 'artsphere-43082.firebasestorage.app',
-        messagingSenderId: '1092112391158',
-        appId: '1:1092112391158:web:2af81237599b0ec78145d7',
-        measurementId: 'G-V95XTWG45M'
-      };
+        // Firebase config (must match your app)
+        var firebaseConfig = {
+            apiKey: 'AIzaSyDHWTMe101Rb0mU0OxXN1TPdsk6ZIDzccg',
+            authDomain: 'artsphere-43082.firebaseapp.com',
+            projectId: 'artsphere-43082',
+            storageBucket: 'artsphere-43082.firebasestorage.app',
+            messagingSenderId: '1092112391158',
+            appId: '1:1092112391158:web:2af81237599b0ec78145d7',
+            measurementId: 'G-V95XTWG45M'
+        };
 
-      try {
-        firebase.initializeApp(firebaseConfig);
-      } catch (e) {
-        // already initialized
-      }
+        try {
+            firebase.initializeApp(firebaseConfig);
+        } catch (e) {
+            // already initialized
+        }
 
-      // Process the redirect result and notify opener (if any)
-      firebase.auth().getRedirectResult().then(function(result) {
-        try {
-          if (window.opener) {
-            window.opener.postMessage({ type: 'firebase-auth-redirect', success: true }, '*');
-            window.close();
-            return;
-          }
-        } catch (err) {
-          console.error(err);
-        }
-        window.location.replace('/');
-      }).catch(function(error) {
-        console.error('Auth redirect handler error', error);
-        try {
-          if (window.opener) {
-            window.opener.postMessage({ type: 'firebase-auth-redirect-error', message: error && error.message ? error.message : String(error) }, '*');
-            window.close();
-            return;
-          }
-        } catch (err) {
-          console.error(err);
-        }
-        window.location.replace('/');
-      });
+        // Process the redirect result and notify opener (if any)
+        firebase.auth().getRedirectResult().then(function (result) {
+            try {
+                if (window.opener) {
+                    window.opener.postMessage({ type: 'firebase-auth-redirect', success: true }, '*');
+                    window.close();
+                    return;
+                }
+            } catch (err) {
+                console.error(err);
+            }
+            window.location.replace('/');
+        }).catch(function (error) {
+            console.error('Auth redirect handler error', error);
+            try {
+                if (window.opener) {
+                    window.opener.postMessage({ type: 'firebase-auth-redirect-error', message: error && error.message ? error.message : String(error) }, '*');
+                    window.close();
+                    return;
+                }
+            } catch (err) {
+                console.error(err);
+            }
+            window.location.replace('/');
+        });
     </script>
-  </body>
+</body>
+
 </html>
