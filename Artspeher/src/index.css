@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #f7f5f2;
+  --color-foreground: #111115;
+  --color-card: #ffffff;
+  --color-card-foreground: #111115;
+  --color-popover: #ffffff;
+  --color-popover-foreground: #111115;
+  --color-primary: #1f2937;
+  --color-primary-foreground: #f8fafc;
+  --color-secondary: #d96c4c;
+  --color-secondary-foreground: #ffffff;
+  --color-muted: #e7e5e1;
+  --color-muted-foreground: #6b7280;
+  --color-accent: #fde8de;
+  --color-accent-foreground: #7c2d12;
+  --color-destructive: #dc2626;
+  --color-destructive-foreground: #ffffff;
+  --color-border: #d6d3d1;
+  --color-input: #f3f2f1;
+  --color-ring: #1f2937;
+  --radius-lg: 1rem;
+  --radius-md: 0.75rem;
+  --radius-sm: 0.5rem;
+}
+
+@layer base {
+  *, ::before, ::after {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-background text-foreground antialiased;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  ::selection {
+    @apply bg-secondary/30 text-secondary-foreground;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    @apply hidden;
+    width: 0;
+    height: 0;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
